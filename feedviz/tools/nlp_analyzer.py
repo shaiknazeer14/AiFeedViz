@@ -1,0 +1,33 @@
+import json
+import pandas as pd
+from collections import Counter
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from feedviz.config.settings import settings
+
+analyzer = SentimentIntensityAnalyzer()
+
+def analyze_sentiment(text: str) -> dict:
+    if not isinstance(text, str) or not text.strip():
+        return {"compound": 0.0, "pos": 0.0, "neg": 0.0, "neu": 1.0, "label": "neutral"}
+
+    scores = analyzer.polarity_scores(text)
+
+    if scores["compound"] >= 0.05:
+        label = "positive"
+    elif scores["compound"] <= -0.05:
+        label = "negative"
+    else:
+        label = "neutral"
+
+    scores["label"] = label
+    return scores
+
+
+# Keyword extraction
+def extract_keywords(text:str,top_n:int=10)->list:
+    if not isinstance(text, str) or not text.strip():
+        return []
+    tokens=text.split()
+    word_counts=Counter(tokens)
+    top_keywords = [word for word, count in word_counts.most_common(top_n)]
+    return top_keywords
