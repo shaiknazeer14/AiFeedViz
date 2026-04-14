@@ -31,3 +31,19 @@ def extract_keywords(text:str,top_n:int=10)->list:
     word_counts=Counter(tokens)
     top_keywords = [word for word, count in word_counts.most_common(top_n)]
     return top_keywords
+# Returns list of topics whose keywords overlap with the input keywords
+def get_topic_clusters(keywords:list) -> list:
+    topics = {
+        "pacing": {"fast", "slow", "rush", "speed", "pace"},
+        "clarity": {"clear", "confus", "unclear", "explain", "understand"},
+        "engagement": {"boring", "engag", "interest", "monoton", "enthusiast"},
+        "helpfulness": {"help", "support", "approach", "availabl"},
+        "knowledge": {"knowledg", "expert", "subject", "concept"}
+    }
+    input_words = set(keywords)  # ← use the actual input!
+    result = {
+        topic: input_words.intersection(topic_words)
+        for topic, topic_words in topics.items()
+        if input_words.intersection(topic_words)
+    }
+    return list(result.keys())
