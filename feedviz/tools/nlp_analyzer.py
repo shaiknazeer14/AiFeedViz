@@ -47,3 +47,17 @@ def get_topic_clusters(keywords:list) -> list:
         if input_words.intersection(topic_words)
     }
     return list(result.keys())
+
+# It is to analyze the entire input dataset given and done all functions like analyze_sentiment, extract_keywords etc
+def analyze_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+
+    df["sentiment"] = df["feedback_text"].apply(analyze_sentiment)
+
+    df["sentiment_score"] = df["sentiment"].apply(lambda x: x["compound"])
+    df["sentiment_label"] = df["sentiment"].apply(lambda x: x["label"])
+
+    df["keywords"] = df["feedback_clean"].apply(extract_keywords)
+    df["topics"] = df["keywords"].apply(get_topic_clusters)
+
+    return df
