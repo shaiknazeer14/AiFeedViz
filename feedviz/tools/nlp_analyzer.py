@@ -61,3 +61,39 @@ def analyze_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df["topics"] = df["keywords"].apply(get_topic_clusters)
 
     return df
+
+def get_nlp_summary(df: pd.DataFrame) -> dict:
+    # Step 2 — Count sentiment labels
+    sentiment_counts = df['sentiment_label'].value_counts().to_dict()
+
+    # Step 3 — Average sentiment per teacher
+    avg_sentiment_per_teacher = (
+        df.groupby('teacher_name')['sentiment_score']
+        .mean()
+        .round(2)
+        .to_dict()
+    )
+
+    # Step 4 — Most common topics
+    all_topics = []
+    for topics in df['topics']:
+        if isinstance(topics, list):  # ensure it's a list
+            all_topics.extend(topics)
+
+    top_topics = [topic for topic, _ in Counter(all_topics).most_common(5)]
+
+    # Step 5 — Most common keywords
+    all_keywords = []
+    for keywords in df['keywords']:
+        if isinstance(keywords, list):  # ensure it's a list
+            all_keywords.extend(keywords)
+
+    top_keywords = [kw for kw, _ in Counter(all_keywords).most_common(5)]
+
+    # Step 6 — Return dictionary
+    return {
+        "sentiment_counts": sentiment_counts,
+        "avg_sentiment_per_teacher": avg_sentiment_per_teacher,
+        "top_topics": top_topics,
+        "top_keywords": top_keywords
+    }
