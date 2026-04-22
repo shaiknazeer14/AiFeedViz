@@ -20,6 +20,10 @@ class Settings(BaseSettings):
     rankings_output: Path = BASE_DIR / "outputs" / "rankings.json"
     insights_output: Path = BASE_DIR / "outputs" / "insights.json"
     report_output: Path = BASE_DIR / "outputs" / "reports.json"
+    # FAISS Vector Database
+    faiss_index_path: Path = BASE_DIR / "outputs" / "faiss_index"
+    embeddings_model: str = "all-MiniLM-L6-v2"
+    top_k_results: int = 5
 
     # Scoring Weights
     weight_rating: float = 0.5

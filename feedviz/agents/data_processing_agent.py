@@ -11,6 +11,7 @@ from crewai.tools import tool
 from feedviz.tools.text_cleaner import clean_feedback_dataframe, get_processing_summary
 from feedviz.config.settings import settings
 
+
 @tool("Load and validate feedback CSV")
 def load_feedback_csv(csv_path: str) -> str:
     """
@@ -67,7 +68,9 @@ def clean_and_save_feedback(csv_path: str) -> str:
 
 groq_llm = LLM(
     model="groq/llama-3.1-8b-instant",
-    api_key=os.environ.get("GROQ_API_KEY")
+    api_key=os.environ.get("GROQ_API_KEY"),
+    temperature=0.1,
+    tool_choice="auto",
 )
 
 data_processing_agent = Agent(
@@ -88,6 +91,8 @@ data_processing_agent = Agent(
     verbose=True,
     allow_delegation=False,
     max_iter=5,
+    use_system_prompt=True,
+    respect_context_window=True,
 )
 
 data_processing_task = Task(
