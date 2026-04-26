@@ -6,7 +6,7 @@ class Settings(BaseSettings):
 
     # LLM
     openai_api_key: str = Field(default="", env="GROQ_API_KEY")
-    openai_model: str = Field(default="gpt-4o-mini", env="OPENAI_MODEL")
+    openai_model: str = Field(default="gemini/gemini-2.0-flash", env="OPENAI_MODEL")
 
     # File Paths
     raw_data_dir: Path = BASE_DIR / "data" / "raw"
@@ -15,6 +15,7 @@ class Settings(BaseSettings):
 
     feedback_csv: Path = BASE_DIR / "data" / "raw" / "feedback_train.csv"
     cleaned_csv: Path = BASE_DIR / "data" / "processed" / "feedback_cleaned.csv"
+    feedback_csv: Path = BASE_DIR / "data" / "raw" / "feedback_train.csv"
 
     scores_output: Path = BASE_DIR / "outputs" / "scores.json"
     rankings_output: Path = BASE_DIR / "outputs" / "rankings.json"

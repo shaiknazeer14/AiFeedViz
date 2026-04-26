@@ -13,10 +13,9 @@ from feedviz.config.settings import settings
 
 
 groq_llm = LLM(
-    model="groq/llama-3.3-70b-versatile",
+    model="ollama/mistral",
     api_key=os.environ.get("GROQ_API_KEY"),
     temperature=0.1,
-    tool_choice="auto",
 )
 
 

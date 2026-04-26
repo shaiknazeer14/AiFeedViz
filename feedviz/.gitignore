@@ -1,0 +1,16 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# IDE
+.idea/
+
+# Data & outputs
+data/
+outputs/
+
+# OS files
+.DS_Store

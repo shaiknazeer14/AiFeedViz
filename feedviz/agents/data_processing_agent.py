@@ -67,10 +67,9 @@ def clean_and_save_feedback(csv_path: str) -> str:
 
 
 groq_llm = LLM(
-    model="groq/llama-3.1-8b-instant",
+    model="ollama/mistral",
     api_key=os.environ.get("GROQ_API_KEY"),
     temperature=0.1,
-    tool_choice="auto",
 )
 
 data_processing_agent = Agent(
